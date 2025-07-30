@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register - SpringChat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/__CSS_FILE__}" rel="stylesheet">
+</head>
+<body>
+<main th:replace="~{fragments/auth-card-fragment :: authCard(
+    '/auth/register',
+    ${dto},
+    'Register',
+    'Create an account to get started',
+    'Register',
+    'Already have an account?',
+    'Sign in',
+    '/auth/login',
+    ~{fragments/auth-register-inputs :: authRegisterInputs}
+    )}">
+</main>
+<!--<script th:src="@{/js/prevent-resubmit.js}"></script>-->
+</body>
+</html>

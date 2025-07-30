@@ -1,0 +1,23 @@
+{
+	"name": "frontend",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"build": "vite build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"@tailwindcss/cli": "^4.1.11",
+		"@tailwindcss/vite": "^4.1.11",
+		"tailwindcss": "^4.1.11"
+	},
+	"devDependencies": {
+		"vite": "^7.0.1"
+	},
+	"prettier": {
+		"printWidth": 100
+	}
+}

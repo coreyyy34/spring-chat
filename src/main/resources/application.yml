@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: spring-chat
+
+logging:
+  pattern:
+    console: >-
+      %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint}
+      %clr([%15.15thread]){blue} 
+      %highlight(%-5level){FATAL=red bold, ERROR=red, WARN=yellow, INFO=green, DEBUG=cyan, TRACE=blue} 
+      %clr(%-50.50class){cyan}
+      %clr(-){faint} 
+      %clr([%X{correlationId}]){magenta} 
+      %msg%n
+
+jwt:
+  access:
+    secret: ${JWT_ACCESS_SECRET}
+  refresh:
+    secret: ${JWT_REFRESH_SECRET}

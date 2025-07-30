@@ -1,0 +1,18 @@
+<th:block th:fragment="authLoginInputs">
+    <div th:replace="~{fragments/input-fragment :: input('username',
+                                                                     'Username',
+                                                                     'text',
+                                                                     true,
+                                                                     'Enter your username',
+                                                                     ${globalError != null})}"></div>
+
+    <div th:replace="~{fragments/input-fragment :: input('password',
+                                                                 'Password',
+                                                                 'password',
+                                                                 true,
+                                                                 'Enter your password',
+                                                                 ${globalError != null})}"></div>
+
+    <div th:replace="~{fragments/error-fragment :: error(${globalError})}">
+    </div>
+</th:block>

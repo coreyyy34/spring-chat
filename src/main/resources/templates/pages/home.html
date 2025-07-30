@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SpringChat - Welcome</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/__CSS_FILE__}" rel="stylesheet">
+</head>
+<body class="bg-gray-200 min-h-screen">
+<nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div th:replace="~{fragments/branding-fragment :: branding(primary)}"></div>
+            <div class="flex items-center space-x-4">
+                <a th:href="@{/auth/login}"
+                   class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Login
+                </a>
+                <a th:href="@{/auth/register}"
+                   class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-blue-600 text-white h-8 px-4 transition-all duration-300 ease-in-out hover:bg-blue-700">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-1">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Hero Section -->
+        <div class="text-center">
+            <div class="mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-lg mb-6">
+                    <svg th:replace="~{fragments/icons :: chat('w-8 h-8 text-white')}"></svg>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl mb-4">
+                    SpringChat
+                </h1>
+
+                <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-600">
+                    Chat in real time. Stay connected. Join channels, share ideas, and keep the conversation flowing -
+                    wherever you are.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center max-w-xl mx-auto">
+                <a th:href="@{/chat}"
+                   class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-blue-600 text-white h-12 px-6 w-full transition-all duration-300 ease-in-out hover:bg-blue-700">
+                    <svg th:replace="~{fragments/icons :: chat('w-4 h-4')}"></svg>
+                    Start Chatting
+                </a>
+
+                <div class="flex flex-col sm:flex-row gap-3 w-full">
+                    <a th:href="@{/auth/login}"
+                       class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-white text-gray-900 h-12 px-6 w-full transition-all duration-300 ease-in-out border border-gray-300 hover:bg-gray-50">
+                        <svg th:replace="~{fragments/icons :: login('w-4 h-4')}"></svg>
+                        Login
+                    </a>
+
+                    <a th:href="@{/auth/register}"
+                       class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium bg-white text-gray-900 h-12 px-6 w-full transition-all duration-300 ease-in-out border border-gray-300 hover:bg-gray-50">
+                        <svg th:replace="~{fragments/icons :: signup('w-4 h-4')}"></svg>
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

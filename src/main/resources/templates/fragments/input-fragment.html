@@ -1,0 +1,23 @@
+<div th:fragment="input(name, label, type, required, placeholder, showErrorBorder)"
+     th:with="hasError=${errors != null and errors.containsKey(name)}"
+     class="space-y-2">
+    <label th:for="${name}">
+        <span th:text="${label}"></span>
+        <span th:if="${required}"
+              class="text-red-500">*</span>
+    </label>
+    <input th:id="${name}"
+           th:field="*{__${name}__}"
+           th:type="${type}"
+           th:placeholder="${placeholder}"
+           th:classappend="${hasError or showErrorBorder ? 'ring-1 ring-red-500' : ''}"
+           type="text"
+           class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm transition-all duration-300 ease-in-out
+                  placeholder:text-gray-500
+                  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500
+                  disabled:cursor-not-allowed disabled:opacity-50"
+    />
+
+    <div th:replace="~{fragments/error-fragment :: error(${hasError} ? ${errors.get(name)} : null)}">
+    </div>
+</div>

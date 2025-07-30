@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - SpringChat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/__CSS_FILE__}" rel="stylesheet">
+</head>
+<body>
+<main th:replace="~{fragments/auth-card-fragment :: authCard(
+    '/auth/login',
+    ${dto},
+    'Sign In',
+    'Sign in to access your account',
+    'Sign In',
+    'Don\'t have an account?',
+    'Sign up',
+    '/auth/register',
+    ~{fragments/auth-login-inputs :: authLoginInputs}
+    )}">
+</main>
+<!--<script th:src="@{/js/prevent-resubmit.js}"></script>-->
+</body>
+</html>

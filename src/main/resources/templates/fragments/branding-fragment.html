@@ -1,0 +1,10 @@
+<div th:fragment="branding(type)"
+     class="flex items-center">
+    <div class="inline-flex items-center justify-center w-8 h-8 bg-blue-600 rounded-lg mr-3">
+        <svg th:replace="~{fragments/icons :: chat('w-4 h-4 text-white')}"></svg>
+    </div>
+    <h1 class="text-xl font-bold"
+        th:classappend="${type == 'primary' ? 'text-gray-900' : 'text-white'}">
+        SpringChat
+    </h1>
+</div>
