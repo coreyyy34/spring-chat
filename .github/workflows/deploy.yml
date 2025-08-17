@@ -1,0 +1,100 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  VPS_PORT: ${{ secrets.APP_PORT }}
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.APP_NAME }}
+  DOCKER_TAG: latest
+
+jobs:
+  #  test:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout code
+  #        uses: actions/checkout@v4
+  #
+  #      - name: Setup Java
+  #        uses: actions/setup-java@v4
+  #        with:
+  #          java-version: "21"
+  #          distribution: "temurin"
+  #
+  #      - name: Setup Gradle
+  #        uses: gradle/actions/setup-gradle@v4
+  #
+  #      - name: Make gradlew executable
+  #        run: chmod +x ./gradlew
+  #
+  #      - name: Run tests
+  #        run: ./gradlew test --no-daemon --build-cache
+
+  build:
+    #    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build JAR
+        run: ./gradlew bootJar --no-daemon --build-cache -x test
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            docker pull ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+            docker stop ${{ secrets.APP_NAME }} || true
+            docker rm ${{ secrets.APP_NAME }} || true
+            docker run -d \
+              --restart unless-stopped \
+              -p ${{ env.VPS_PORT }}:8080 \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
+              -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }} \
+              -e JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }} \
+              --name ${{ secrets.APP_NAME }} ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}

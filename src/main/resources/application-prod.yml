@@ -11,3 +11,4 @@ spring:
 logging:
   level:
     nz.coreyh.springchat: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
